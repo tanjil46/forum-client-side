@@ -22,6 +22,7 @@ import {
 }from '@tanstack/react-query'
 import UserProfile from './Dashborad/UserHome/UserProfile';
 import Membership from './general componets/Membership';
+import Payment from './general componets/payment/Payment';
 
 const queryClient = new QueryClient()
 const router=createBrowserRouter([
@@ -48,6 +49,10 @@ const router=createBrowserRouter([
     {
       path:'/member',
       element:<Membership></Membership>
+    },
+    {
+      path:'/payment',
+      element:<Payment></Payment>
     }
 
 

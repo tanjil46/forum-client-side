@@ -61,7 +61,7 @@ const Authprovider = ({children}) => {
             console.log(res.data)
              if(res.data.token){
               localStorage.setItem('myToken',res.data.token)
-              setLoading(false)
+              // setLoading(false)
              } 
 
 
@@ -69,7 +69,7 @@ const Authprovider = ({children}) => {
           }else{
 
             localStorage.removeItem('myToken')
-            setLoading(false)
+            // setLoading(false)
   
             }
   
@@ -77,7 +77,7 @@ const Authprovider = ({children}) => {
 
 
 
-
+         setLoading(false)
 
 
            })

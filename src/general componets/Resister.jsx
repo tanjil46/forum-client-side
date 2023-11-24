@@ -7,11 +7,13 @@ import 'react-awesome-button/dist/styles.css';
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import usePublicAxios from "../Hooks/usePublicAxios";
 const Resister = () => {
-
+const openAxios=usePublicAxios()
 const{createUser,updateUserProfile}=useAuth()
 const naviagte=useNavigate()
 const { register, handleSubmit } = useForm()
+const brozeBadge='https://i.ibb.co/h7xdGsq/images.jpg'
 const onSubmit=async(data)=>{
 
 
@@ -69,6 +71,17 @@ const onSubmit=async(data)=>{
             'Succesfully Sign In',
             'success'
         )
+
+        const userInfo={email,name,photo,badge:brozeBadge}
+
+     openAxios.post('/users',userInfo)
+     .then(res=>console.log('User posted',res.data))
+
+
+
+
+
+
     })
    
 
@@ -156,7 +169,7 @@ naviagte('/')
    <label className="label">
     <span className="label-text">PhotoUrl</span>
    </label>
-   <input type="text" {...register('photoUrl',{required:true})} placeholder="Your Image" className="input input-bordered" required />
+   <input type="text" {...register('photo',{required:true})} placeholder="Your Image" className="input input-bordered" required />
  
 </div>
 

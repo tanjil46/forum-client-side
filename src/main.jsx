@@ -15,8 +15,15 @@ import Resister from './general componets/Resister';
 import Authprovider from './general componets/Authprovider';
 import Dashboard from './Dashborad/Dashboard';
 import UserAddpost from './Dashborad/UserHome/UserAddpost';
+import {
+  QueryClient,
+  QueryClientProvider
+ 
+}from '@tanstack/react-query'
+import UserProfile from './Dashborad/UserHome/UserProfile';
+import Membership from './general componets/Membership';
 
-
+const queryClient = new QueryClient()
 const router=createBrowserRouter([
 
 
@@ -37,6 +44,10 @@ const router=createBrowserRouter([
     {
       path:'/resister',
       element:<Resister></Resister>
+    },
+    {
+      path:'/member',
+      element:<Membership></Membership>
     }
 
 
@@ -62,6 +73,10 @@ const router=createBrowserRouter([
     {
       path:'addpost',
       element:<UserAddpost></UserAddpost>
+    },
+    {
+      path:'userprofile',
+      element:<UserProfile></UserProfile>
     }
 
 
@@ -101,9 +116,15 @@ const router=createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Authprovider>
+
+    <QueryClientProvider client={queryClient}>
+
     <div className="max-w-screen-xl mx-auto">
     <RouterProvider router={router}></RouterProvider>
     </div>
+
+    </QueryClientProvider>
+
     </Authprovider>
  
   </React.StrictMode>,

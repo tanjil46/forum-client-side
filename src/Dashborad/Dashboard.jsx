@@ -44,7 +44,7 @@ admin?
 //USER DASBOARD
 <li className="space-y-6">
 
-<NavLink to='/dash/userhome' className='text-white mx-auto text-5xl'>
+<NavLink to='/dashboard/userprofile' className='text-white mx-auto text-5xl'>
  <CgProfile></CgProfile></NavLink>
 
 

@@ -4,29 +4,32 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import useAuth from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import usePublicAxios from "../Hooks/usePublicAxios";
 
 
 const GoogleLogin = () => {
 
     const {googleLogIn}=useAuth()
-
+    const openAxios=usePublicAxios()
     const navigate=useNavigate()
     
+    const brozeBadge='https://i.ibb.co/h7xdGsq/images.jpg'
+
         const googleLogInHanler=()=>{
     
             googleLogIn()
             .then((result)=>{
               console.log(result.user)
-            //   const userInfo={
-            //     email:result.user.email,
-            //     name:result.user.displayName,
-            //     photoUrl:result.user.photoURL}
-              
-    
-            // openAxios.post('/users',userInfo)
-            // .then(res=>{
-            //     console.log(res.data)
-            // })
+              const userInfo={
+               email:result.user.email,
+                name:result.user.displayName,
+              photo:result.user.photoURL,
+              badge:brozeBadge
+            }
+              openAxios.post('/users',userInfo)
+          .then(res=>{
+                console.log(res.data)
+          })
     
     
     navigate('/')

@@ -1,35 +1,107 @@
 import { useForm } from "react-hook-form";
 import Hadlines from "../../general componets/Hadlines";
+import usePublicAxios from "../../Hooks/usePublicAxios";
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
+import useAuth from "../../Hooks/useAuth";
+import { Link } from "react-router-dom";
 
 
+const bbImage_hosting_key='26084db1c96279fe50abffb136cb0e8e';
+const bbImage_hosting_api=`https://api.imgbb.com/1/upload?key=${bbImage_hosting_key} `
 const UserAddpost = () => {
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit,reset} = useForm()
+const openAxios=usePublicAxios()
+const{user}=useAuth()
+const [totalPost,setTotalPost]=useState(0)
+const [becomeMember,setBecomeMember]=useState(false)
 
 
-    function getCurrentDateTime() {
-      const currentDateAndTime = new Date();
-      const formatTedDate = currentDateAndTime.toISOString(); // You can format this date as needed
+openAxios.get(`/post-count/${user?.email}`)
+.then(res=>{
+  console.log(res.data)
+  setTotalPost(res?.data?.toTalPost)
+})
+console.log(totalPost)
+// const {refetch,data:toTalPost}=useQuery({
+//   queryKey:['totalpost',user.email],
+//   queryFn:async()=>{
+//       const res=await openAxios.get(`/post-count/${user?.email}`)
+//       return res.data
+ 
+//   }
+
+// })
+// console.log('payment')
+
+
+  
+useEffect(()=>{
+if(totalPost>=5){
+  setBecomeMember(true)
     
-      return formatTedDate;
     }
+
+},[totalPost])
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+function getCurrentDateTime() {
+  const currentDateAndTime = new Date()
+  const formatTedDate = currentDateAndTime.toISOString(); 
+
+  return formatTedDate;
+}
 
 
  const onSubmit=async(data)=>{
+  const imageUrl={image:data.image[0]}
 
-const image=data.image
+
+  const res=await openAxios.post(bbImage_hosting_api,imageUrl,{
+    headers:{
+      'content-Type':'multipart/form-data'
+    }
+    
+  })
+  console.log(res.data)
+
+const image=res.data.data.display_url
 const name=data.name
 const title=data.title
 const date=getCurrentDateTime()
 const tags=data.tags
 const email=data.email
 const description=data.desc
-console.log(image,name,title,data,tags,date,email,description)
+console.log(image,name,title,tags,date,email,description)
+
+const userPost={image,name,title,tags,date,email,description,upVote:0,downVote:0}
 
 
+const postRes=await openAxios.post('/userpost',userPost)
+  console.log(postRes.data)
 
-
-
-
+if(postRes.data.insertedId){
+  reset()
+  Swal.fire({
+    position: "top-end",
+    icon: "success",
+    title: "SuccesFully Posted",
+    showConfirmButton: false,
+    timer: 1500
+  });
+}
 
 
 
@@ -70,7 +142,7 @@ console.log(image,name,title,data,tags,date,email,description)
     <span className="label-text">Author Email*</span>
    
   </label>
-  <input {...register('email',{required:true})} type="text" placeholder=" Author email" className="input  input-bordered input-primary w-full " />
+  <input {...register('email',{required:true})} defaultValue={user?.email} type="text" placeholder=" Author email" className="input  input-bordered input-primary w-full " />
   
 </div>
 
@@ -138,7 +210,7 @@ console.log(image,name,title,data,tags,date,email,description)
   <option value="technology">Technology</option>
   <option value="design">Design</option>
   <option value="health">Health</option>
-  <option value="Travel">Travel</option>
+  <option value="travel">Travel</option>
   <option value="works">Works</option>
 </select> 
   
@@ -160,7 +232,13 @@ console.log(image,name,title,data,tags,date,email,description)
   </div>
 
 <div className="text-center my-6">
+{
+
+becomeMember?<Link to='/member' className="btn bg-slate-500 ">BECOME A MEMBER</Link> :
+
 <button className="btn bg-slate-500 " type="submit">Add Post</button> 
+
+}
 </div>
 
      

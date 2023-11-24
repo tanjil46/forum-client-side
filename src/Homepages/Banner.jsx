@@ -1,3 +1,4 @@
+import Tags from "./Tags";
 
 
 const Banner = () => {
@@ -14,6 +15,7 @@ const Banner = () => {
  <input  className="py-2 px-10 outline-none border-b-4  border-red-500" type="text"  placeholder="Your Post" ></input>
  <button type="submit"  className="btn btn-error">Search</button>
  </form>
+ <Tags></Tags>
  </div>
 
 

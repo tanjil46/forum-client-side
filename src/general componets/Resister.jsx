@@ -6,23 +6,53 @@ import { AwesomeButton } from "react-awesome-button";
 import 'react-awesome-button/dist/styles.css';
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
 const Resister = () => {
 
 const{createUser,updateUserProfile}=useAuth()
 const naviagte=useNavigate()
+const { register, handleSubmit } = useForm()
+const onSubmit=async(data)=>{
 
-const resiterHandler=e=>{
 
-
-    e.preventDefault()
+  
     
    
-    const email=e.target.email.value
-    const password=e.target.password.value
-    const name=e.target.name.value
-    const photo=e.target.photoUrl.value
+    const email=data.email
+    const password=data.password
+    const name=data.name
+    const photo=data.photo
     console.log(email,password,name,photo)
   
+ 
+    if(password.length<6){
+        return Swal.fire(
+            'Warning!',
+            'Your Password Must be  Minimum Six characters',
+            'warning'
+        ) 
+        }
+        else if(!/[A-Z]/.test(password)){
+            return Swal.fire(
+                'Warning!',
+                'There Must Be a Capital latter',
+                'warning'
+            )
+    
+      
+        }
+        else if(!/[@$!%*?&]/.test(password)){
+            return Swal.fire(
+                'Warning!',
+                'There Must Be a Special latter',
+                'warning'
+            )
+    
+            
+    
+    
+        }
+        
   
 
     createUser(email,password)
@@ -110,14 +140,14 @@ naviagte('/')
      <div className="">
  <p className="text-center text-xl font-bold">Sing In</p>
  </div>
- <form onSubmit={resiterHandler}  className="card-body">
+ <form onSubmit={handleSubmit(onSubmit)}  className="card-body">
 
 
  <div className="form-control">
    <label className="label">
     <span className="label-text">Name</span>
    </label>
-   <input type="text" placeholder="Your name" name="name" className="input input-bordered" required />
+   <input type="text" {...register('name',{required:true})} placeholder="Your name" className="input input-bordered" required />
  
 </div>
 
@@ -126,7 +156,7 @@ naviagte('/')
    <label className="label">
     <span className="label-text">PhotoUrl</span>
    </label>
-   <input type="text" placeholder="Your Image" name="photoUrl" className="input input-bordered" required />
+   <input type="text" {...register('photoUrl',{required:true})} placeholder="Your Image" className="input input-bordered" required />
  
 </div>
 
@@ -144,13 +174,13 @@ naviagte('/')
    <label className="label">
    <span className="label-text">Email</span>
    </label>
-  <input type="email" placeholder="email" name="email" className="input input-bordered" required />
+  <input {...register('email',{required:true})} type="email" placeholder="email"  className="input input-bordered" required />
  </div>
  <div className="form-control">
    <label className="label">
     <span className="label-text">Password</span>
    </label>
-   <input type="password" placeholder="password" name="password" className="input input-bordered" required />
+   <input type="password" {...register('password',{required:true})} placeholder="password" className="input input-bordered" required />
  
 </div>
  <div className="form-control mt-6">

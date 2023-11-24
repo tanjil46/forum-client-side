@@ -74,7 +74,7 @@ const Navbar = () => {
       <img className='w-[70px] rounded-full mx-auto' src={user.photoURL}></img>
       <h3 className="text-xl flex items-center justify-center"><FaUser></FaUser>{user.displayName}</h3>
      
-      <Link className='text-center text-lg font-bold hover:text-slate-300'> DASHBOARD</Link>
+      <Link to={'/dashboard'} className='text-center text-lg font-bold hover:text-slate-300'> DASHBOARD</Link>
   
      <div className="text-center">
       <button onClick={logoutUserHandler} className='btn text-2xl bg-slate-400'><IoIosLogOut></IoIosLogOut></button>

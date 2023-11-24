@@ -2,12 +2,13 @@ import { createContext, useEffect, useState } from "react";
 import {  GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "./firebase.config";
 import PropTypes from 'prop-types';
+import usePublicAxios from "../Hooks/usePublicAxios";
 export const AuthContext=createContext(null)
 const Authprovider = ({children}) => {
     const googleProvider=new GoogleAuthProvider()
     const [loading,setLoading]=useState(true)
     const[user,setUser]=useState(null)
-
+    const openAxios=usePublicAxios()
 
 
 
@@ -51,26 +52,26 @@ const Authprovider = ({children}) => {
         const unSubscribe=onAuthStateChanged(auth,currentUser=>{
        
            setUser(currentUser)
-           setLoading(false)
-        //   const userInfo={email:currentUser.email}
+          
+          const userInfo={email:currentUser?.email}
          
-        //   if(currentUser){
-        //     openAxios.post('/jwt',userInfo)
-        //     .then(res=>{
-        //     console.log(res.data)
-        //      if(res.data.token){
-        //       localStorage.setItem('access_token',res.data.token)
-        //       setLoading(false)
-        //      } 
+          if(currentUser){
+            openAxios.post('/jwt',userInfo)
+            .then(res=>{
+            console.log(res.data)
+             if(res.data.token){
+              localStorage.setItem('myToken',res.data.token)
+              setLoading(false)
+             } 
 
 
-        //     })
-        //   }else{
+            })
+          }else{
 
-        //     localStorage.removeItem('access_token')
-        //     setLoading(false)
+            localStorage.removeItem('myToken')
+            setLoading(false)
   
-        //     }
+            }
   
          
 

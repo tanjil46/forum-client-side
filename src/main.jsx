@@ -13,6 +13,8 @@ import Home from './Homepages/Home';
 import Login from './general componets/Login';
 import Resister from './general componets/Resister';
 import Authprovider from './general componets/Authprovider';
+import Dashboard from './Dashborad/Dashboard';
+import UserAddpost from './Dashborad/UserHome/UserAddpost';
 
 
 const router=createBrowserRouter([
@@ -43,14 +45,38 @@ const router=createBrowserRouter([
 
 
     ]
-  }
+  },
 
                         // DASHBOARD LAYOUT
 
 
 
 {
-  path:'dashboard'
+  path:'dashboard',
+  element:<Dashboard></Dashboard>,
+  children:[
+
+      //  USER INFO
+
+
+    {
+      path:'addpost',
+      element:<UserAddpost></UserAddpost>
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ]
 }
 
 

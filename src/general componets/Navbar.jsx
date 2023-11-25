@@ -6,18 +6,26 @@ import useAuth from '../Hooks/useAuth';
 import { FaUser } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import UseAxiosSecure from '../Hooks/UseAxiosSecure';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 const Navbar = () => {
   const {user,userLogOut}=useAuth()
   const[totalAnnoce,setTotalAnnoce]=useState(0)
   const axiosSecure=UseAxiosSecure()
-   
-  axiosSecure.get('/annonce-count')
-  .then(res=>{
-    console.log(res.data)
-    setTotalAnnoce(res.data.totalA)
-  })
+   useEffect(()=>{
 
+    axiosSecure.get('/annonce-count')
+    .then(res=>{
+      console.log(res.data)
+      setTotalAnnoce(res.data.totalA)
+    })
+  
+
+
+
+
+
+
+   },[axiosSecure])
 
   const logoutUserHandler=()=>{
     userLogOut()

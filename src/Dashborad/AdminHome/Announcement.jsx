@@ -37,7 +37,7 @@ console.log(image,name,title,desc)
  const annouceInfo={image,name,title,desc}
  
  const adminres=await axiosSecure.post('/annouce',annouceInfo) 
- console.log(adminres.data)
+ 
     if(adminres.data.insertedId){
         reset()
         Swal.fire(

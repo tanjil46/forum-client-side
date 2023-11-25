@@ -26,6 +26,8 @@ import Payment from './general componets/payment/Payment';
 import MangeUser from './Dashborad/AdminHome/MangeUser';
 import Announcement from './Dashborad/AdminHome/Announcement';
 
+import Details from './Homepages/Details';
+
 const queryClient = new QueryClient()
 const router=createBrowserRouter([
 
@@ -55,6 +57,11 @@ const router=createBrowserRouter([
     {
       path:'/payment',
       element:<Payment></Payment>
+    },
+    {
+      path:'/detail/:id',
+      element:<Details></Details>
+ 
     }
 
 

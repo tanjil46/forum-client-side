@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Tags from "./Tags";
 import usePublicAxios from "../Hooks/usePublicAxios";
-import ShowPost from "./ShowPost";
+
+import Posts from "./Posts";
 
 
 
 const Banner = () => {
 
-const[tagValues,setTagvalues]=useState()
- 
+const[tagValues,setTagvalues]=useState('')
+ const[findTags,setFindTags]=useState([])
 
  const openAxios=usePublicAxios()
  const [userposts,setUserPosts]=useState([])
@@ -26,7 +27,7 @@ const[tagValues,setTagvalues]=useState()
 
 
 
-console.log(tagValues)
+ console.log(tagValues)
  
  useEffect(()=>{
  
@@ -45,16 +46,21 @@ console.log(tagValues)
  
  const newToOlder = userposts.sort((a, b) => new Date(b.date)- new Date(a.date));
  
+console.log(newToOlder)
+ 
+ 
+ useEffect(()=>{
+
 
  
- 
- 
- 
-  const findValueWithTags=newToOlder.filter(tag=>tag.tags.includes(tagValues))
- 
+  const findValueWithTags=newToOlder.filter(tagOfPost=>tagOfPost.tags.includes(tagValues))
+ setFindTags(findValueWithTags)
   console.log(findValueWithTags)
  
  
+
+
+  },[newToOlder,tagValues])
  
  
  
@@ -76,7 +82,7 @@ console.log(tagValues)
 
   <div  className="text-center ">
     <form >
- <input onChange={(e)=>setTagvalues(e.target.value)} value={tagValues} name='tags' className="py-2 px-10 outline-none border-b-4  border-red-500" type="text"  placeholder="Your Post" ></input>
+  <input onChange={(e)=>setTagvalues(e.target.value)} className="py-2 px-10 outline-none border-b-4  border-red-500" type="text"  placeholder="Your Post" ></input> 
  <button type="submit"  className="btn btn-error">Search</button>
  </form>
  <Tags></Tags>
@@ -91,9 +97,9 @@ console.log(tagValues)
 
         
 
-  <div className="">
+  <div className="grid grid-cols-1 lg:grid-cols-2 p-10 gap-3 my-4">
     {
-      findValueWithTags.map((tagPost,idx)=><ShowPost tagPost={tagPost} key={idx}></ShowPost>)
+  findTags.map((posts,idx)=><Posts posts={posts} key={idx}></Posts>)
     }
   </div>
 

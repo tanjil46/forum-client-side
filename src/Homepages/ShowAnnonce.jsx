@@ -8,7 +8,7 @@ const[annonces,setAnnounces]=useState([])
     const openAxios=usePublicAxios()
    openAxios.get('/annonce')
    .then(res=>{
-    console.log(res.data)
+    
     setAnnounces(res.data)
    })
 

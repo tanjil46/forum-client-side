@@ -18,6 +18,8 @@ const [totalPost,setTotalPost]=useState(0)
 const [becomeMember,setBecomeMember]=useState(false)
 const axiosSecure=UseAxiosSecure()
 const[sameUser,setsameUser]=useState([])
+
+
 openAxios.get(`/post-count/${user?.email}`)
 .then(res=>{
   console.log(res.data)

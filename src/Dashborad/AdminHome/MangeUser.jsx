@@ -30,15 +30,19 @@ useEffect(()=>{
  })
 
 },[axiosSecure])
+const userEmail=users.map(userEmail=>userEmail.email)
 
-const findGoldMember=memeberShip.map(ship=>ship.goldBadge)
+const matchUserbadge=memeberShip.filter(ship=>ship.email===userEmail)
 
 
+//  const findGoldMember=memeberShip.map(ship=>ship.goldBadge)
+
+console.log(matchUserbadge,userEmail)
 
 
 
 const hadlerAdmin=(user)=>{
-    axiosSecure.patch(`/users/admin/${user._id}`)
+    axiosSecure.patch(`/users/admin/${user.name}`)
     .then(res=>{
         console.log(res.data)
         if(res.data.modifiedCount>0)
@@ -125,10 +129,10 @@ const hadlerAdmin=(user)=>{
 
 
         <th>
-        {
-        findGoldMember.length>0? <img className="w-[100px] rounded-full" src={findGoldMember[0]}></img>:
+        
+        {/* findGoldMember>0? <img className="w-[100px] rounded-full" src={findGoldMember}></img>: */}
         <img className="w-[90px] rounded-full" src={user?.badge}></img>
-       }
+       
 
 
 

@@ -6,10 +6,13 @@ import { FaHome, FaUsers } from "react-icons/fa";
 import { MdLocalPostOffice, MdReport } from "react-icons/md";
 import { PiMicrophoneStageDuotone } from "react-icons/pi"
 import logo from '../img/forum-logojpg.jpg'
+import useAdmin from "../Hooks/useAdmin";
+
 const Dashboard = () => {
+const isAdmin=useAdmin()
+console.log(isAdmin)
 
-
-    const admin=true;
+    const admin=isAdmin[0];
     return (
         <div className="flex ">
         <div className="w-60 min-h-screen bg-slate-600">
@@ -35,7 +38,7 @@ admin?
  </NavLink>
 
 
- <NavLink to='/dashboard/review' className='text-white  mx-auto text-5xl'>
+ <NavLink to='/dashboard/ament' className='text-white  mx-auto text-5xl'>
 <PiMicrophoneStageDuotone></PiMicrophoneStageDuotone>
 </NavLink>
 

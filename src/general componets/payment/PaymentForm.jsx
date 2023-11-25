@@ -64,8 +64,8 @@ const formHandler=async(event)=>{
             card:card,
             billing_details:{
              email:user.email,
-             name:user.displayName
-    
+             name:user.displayName,
+            goldBadge:'https://i.ibb.co/qJJz3pG/images11.jpg'
             }
         }
      })
@@ -85,11 +85,24 @@ const formHandler=async(event)=>{
             price,
             transitionId:paymentIntent.id,
             date:new Date(),
-           goldBadge:'https://i.ibb.co/qJJz3pG/images11.jpg'
+          
     }
 
  const res=await axiosSecure.post('/payment',paymentInfo)
            console.log('paymet upload',res.data)
+
+         
+
+
+
+
+
+
+
+
+
+
+
 
            if(res.data.insertedId){
             Swal.fire(

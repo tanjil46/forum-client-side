@@ -24,6 +24,7 @@ import UserProfile from './Dashborad/UserHome/UserProfile';
 import Membership from './general componets/Membership';
 import Payment from './general componets/payment/Payment';
 import MangeUser from './Dashborad/AdminHome/MangeUser';
+import Announcement from './Dashborad/AdminHome/Announcement';
 
 const queryClient = new QueryClient()
 const router=createBrowserRouter([
@@ -93,6 +94,10 @@ const router=createBrowserRouter([
     path:'users',
     element:<MangeUser></MangeUser>
 
+    },
+    {
+      path:'ament',
+      element:<Announcement></Announcement>
     }
 
 

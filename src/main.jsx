@@ -23,6 +23,7 @@ import {
 import UserProfile from './Dashborad/UserHome/UserProfile';
 import Membership from './general componets/Membership';
 import Payment from './general componets/payment/Payment';
+import MangeUser from './Dashborad/AdminHome/MangeUser';
 
 const queryClient = new QueryClient()
 const router=createBrowserRouter([
@@ -72,7 +73,7 @@ const router=createBrowserRouter([
   element:<Dashboard></Dashboard>,
   children:[
 
-      //  USER INFO
+      //  USER ROUTES
 
 
     {
@@ -82,13 +83,17 @@ const router=createBrowserRouter([
     {
       path:'userprofile',
       element:<UserProfile></UserProfile>
+    },
+
+
+       //ADMIN ROUTES
+
+
+    {
+    path:'users',
+    element:<MangeUser></MangeUser>
+
     }
-
-
-
-
-
-
 
 
 

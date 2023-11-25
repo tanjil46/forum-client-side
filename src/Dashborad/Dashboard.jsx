@@ -9,7 +9,7 @@ import logo from '../img/forum-logojpg.jpg'
 const Dashboard = () => {
 
 
-    const admin=false;
+    const admin=true;
     return (
         <div className="flex ">
         <div className="w-60 min-h-screen bg-slate-600">
@@ -21,21 +21,21 @@ const Dashboard = () => {
 admin?
 <><li className="space-y-5">
 
-<NavLink to='/dash/adminhome' className='text-white  mx-auto text-5xl'>
+<NavLink to='/dashboard/adminhome' className='text-white  mx-auto text-5xl'>
  <CgProfile className=""></CgProfile>
  </NavLink>
 
 
- <NavLink to='/dash/items' className='text-white  mx-auto text-5xl'>
+ <NavLink to='/dashboard/users' className='text-white  mx-auto text-5xl'>
  <FaUsers></FaUsers>
 </NavLink>
 
-<NavLink to='/dash/manage' className='text-white  mx-auto text-5xl'>
+<NavLink to='/dashboard/manage' className='text-white  mx-auto text-5xl'>
 <MdReport></MdReport>
  </NavLink>
 
 
- <NavLink to='/dash/review' className='text-white  mx-auto text-5xl'>
+ <NavLink to='/dashboard/review' className='text-white  mx-auto text-5xl'>
 <PiMicrophoneStageDuotone></PiMicrophoneStageDuotone>
 </NavLink>
 

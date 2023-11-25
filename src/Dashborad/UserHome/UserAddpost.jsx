@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router-dom";
+import UseAxiosSecure from "../../Hooks/useAxiosSecure";
 
 
 const bbImage_hosting_key='26084db1c96279fe50abffb136cb0e8e';
@@ -15,8 +16,8 @@ const openAxios=usePublicAxios()
 const{user}=useAuth()
 const [totalPost,setTotalPost]=useState(0)
 const [becomeMember,setBecomeMember]=useState(false)
-
-
+const axiosSecure=UseAxiosSecure()
+const[sameUser,setsameUser]=useState([])
 openAxios.get(`/post-count/${user?.email}`)
 .then(res=>{
   console.log(res.data)
@@ -34,19 +35,36 @@ console.log(totalPost)
 // })
 // console.log('payment')
 
+useEffect(()=>{
+
+
+  axiosSecure.get(`/payment/${user?.email}`)
+ .then(res=>{
+    console.log(res.data)
+   setsameUser(res.data)
+ })
+
+ },[axiosSecure,(user?.email)])
+
+const findUser=sameUser.map(same=>same.email)
+const matchUser= user?.email==findUser
+console.log(findUser,matchUser)
 
   
 useEffect(()=>{
-if(totalPost>=5){
-  setBecomeMember(true)
-    
-    }
-
-},[totalPost])
-
-
+if(totalPost==5 ){
+ return setBecomeMember(false)
+}if(matchUser==true){
+ return setBecomeMember(true)
+}else{
+   setBecomeMember(false)
+}
+ 
  
 
+    
+
+},[totalPost,findUser,matchUser])
 
 
 
@@ -234,10 +252,10 @@ if(postRes.data.insertedId){
 <div className="text-center my-6">
 {
 
-becomeMember?<Link to='/member' className="btn bg-slate-500 ">BECOME A MEMBER</Link> :
+becomeMember? <button className="btn bg-slate-500 " type="submit">Add Post</button>:
 
-<button className="btn bg-slate-500 " type="submit">Add Post</button> 
-
+ 
+<Link to='/member' className="btn bg-slate-500 ">BECOME A MEMBER</Link>
 }
 </div>
 

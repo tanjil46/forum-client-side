@@ -28,8 +28,6 @@ console.log(commentsC)
 
     return (
         <div>
-            
-
          <Link to={`/detail/${_id}`}>
             <div className=" lg:w-[80%] min-h-[400px] w-[full] text-black border-2 border-black my-4">
                 

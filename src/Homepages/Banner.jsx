@@ -11,10 +11,10 @@ const Banner = () => {
 
 const[tagValues,setTagvalues]=useState('')
  const[findTags,setFindTags]=useState([])
-const[pagePerPost,setPagePerpost]=useState(5)
-const[currentPage,setCurrentPage]=useState(0)
+// const[pagePerPost,setPagePerpost]=useState(5)
+// const[currentPage,setCurrentPage]=useState(0)
  const openAxios=usePublicAxios()
-
+const[popu,setPopu]=useState()
  
 
 
@@ -32,14 +32,46 @@ const[currentPage,setCurrentPage]=useState(0)
  console.log(tagValues)
  
  
+//  //pagination
+// const{data:userposts=[]}=useQuery({
+//   queryKey:['userpost'],
+
+//   queryFn:async()=>{
+//          const res=await openAxios.get(`/userpost?page=${currentPage}`)
+           
+//          return res.data
+     
+//   }
+// })
+
+
+
+
+
+
  
+// //post count
+// const{data:postcount}=useQuery({
+//   queryKey:['postcount'],
+
+//   queryFn:async()=>{
+//          const res=await openAxios.get('/totalpost')
+           
+//          return res.data.result
+     
+//   }
+// })
+
+
+
+//
 const{data:userposts=[]}=useQuery({
-  queryKey:['postcount'],
+  queryKey:['userpost'],
 
   queryFn:async()=>{
-         const res=await openAxios.get(`/userpost?page=${currentPage}&size=${pagePerPost} `)
+         const res=await openAxios.get(`/userpost`)
            
-         return res.data.result
+         return res.data
      
   }
 })
@@ -47,49 +79,35 @@ const{data:userposts=[]}=useQuery({
 
 
 
-
-
- 
-
-const{data:postcount}=useQuery({
-  queryKey:['postcount'],
-
-  queryFn:async()=>{
-         const res=await openAxios.get('/totalpost')
-           
-         return res.data.result
-     
-  }
-})
-
-
-
-
-
-
-
-
  
 
 
-const totalPages=Math.ceil(postcount/pagePerPost)
+// const totalPages=Math.ceil(postcount/pagePerPost)
 
 
-const pages=[]
-for(let i=0;i<totalPages;i++){
-    pages.push(i)
+// const pages=[]
+// for(let i=0;i<totalPages;i++){
+//     pages.push(i)
    
-} 
+// } 
 
-console.log(totalPages,pages)
-
-
+// console.log(totalPages)
 
 
 
+// //popularity
 
 
+const{data:popularity=[]}=useQuery({
+  queryKey:['popularity'],
 
+  queryFn:async()=>{
+         const res=await openAxios.get('/popular')
+           
+         return res.data
+     
+  }
+})
 
 
 
@@ -118,34 +136,54 @@ console.log(newToOlder)
  
  
  
+
+  const popularHandler=()=>{
+ 
+    const findIt=popularity.sort((a,b)=>(b.voteDifference)-(a.voteDifference))
+    setFindTags(findIt)
+    
+    
+    }
+    
+    console.log(popu)
+
+
+
+
+
+
  
  
 
-  const pagehandler=(e)=>{
-    const pageValue=parseInt(e.target.value)
-    setPagePerpost(pageValue)
-    setCurrentPage(0)
+  // const pagehandler=(e)=>{
+  //   const pageValue=parseInt(e.target.value)
+  //   // setPagePerpost(pageValue)
+  //   setCurrentPage(0)
     
     
-     }
+  //    }
     
     
-    const prevhanler=()=>{
-    if(currentPage>0){
-        setCurrentPage(currentPage-1)
-    }
-    }
+  //   const prevhanler=()=>{
+  //   if(currentPage>0){
+  //       setCurrentPage(currentPage-1)
+  //   }
+  //   }
     
-    const nexthandler=()=>{
+  //   const nexthandler=()=>{
     
-    if(currentPage<pages.length-1){
-        setCurrentPage(currentPage+1)
-    }
+  //   if(currentPage<pages.length-1){
+  //       setCurrentPage(currentPage+1)
+  //   }
     
-    }
+  //   }
     
     
  
+
+
+
+
 
 
 
@@ -174,6 +212,11 @@ console.log(newToOlder)
 
   </div>
 
+  <p className="text-center md:text-end mt-4 font-bold">Sort By<select className="border-2 border-blue-600" name="level"  >
+    <option className="text-white bg-black font-bold"  onClick={popularHandler}   value='popularity'>Popularity</option>
+ 
+   </select></p>
+
         
 
   <div className="grid grid-cols-1 lg:grid-cols-2 p-10 gap-3 my-4">
@@ -183,10 +226,10 @@ console.log(newToOlder)
   </div>
 
 
-
+{/* 
   <div className="text-center space-x-8">
        
-       <button className="btn bg-slate-400" onClick={prevhanler}>Prev</button>
+       {/* <button className="btn bg-slate-400" onClick={prevhanler}>Prev</button>
        {
            pages.map(page=><button onClick={()=>setCurrentPage(page)} 
            className= {`"btn bg-slate-500" ${currentPage===page ?'text-white btn bg-slate-800':undefined} `}key={page}>{page}</button>)
@@ -194,19 +237,17 @@ console.log(newToOlder)
       <button className="btn bg-slate-400" onClick={nexthandler}>Next</button>
 
       
-<select value={pagePerPost} onChange={pagehandler} name='' id=''>
+<select value={pagePerPost}  name='' id=''>
            <option  value='5'>5</option>
-          <option value='10'>10</option>
-          <option value='12'>12</option>
-          <option value='20'>20</option>
+         
            </select>
 
 
 
 
-     </div>
+     </div> 
 
-
+ */}
 
     </div>
     )

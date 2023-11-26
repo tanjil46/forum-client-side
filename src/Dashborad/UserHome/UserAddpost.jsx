@@ -254,10 +254,10 @@ if(postRes.data.insertedId){
 <div className="text-center my-6">
 {
 
-becomeMember? <button className="btn bg-slate-500 " type="submit">Add Post</button>:
+becomeMember? <Link to='/member' className="btn bg-slate-500 ">BECOME A MEMBER</Link>:
 
- 
-<Link to='/member' className="btn bg-slate-500 ">BECOME A MEMBER</Link>
+<button className="btn bg-slate-500 " type="submit">Add Post</button>
+
 }
 </div>
 

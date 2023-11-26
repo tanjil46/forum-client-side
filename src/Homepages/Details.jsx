@@ -1,32 +1,180 @@
-import { useEffect, useState } from "react";
+
 import usePublicAxios from "../Hooks/usePublicAxios";
 import { useParams } from "react-router-dom";
 import Hadlines from "../general componets/Hadlines";
 import { BiComment, BiDownvote, BiUpvote } from "react-icons/bi";
+import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 
 const Details = () => {
 const openAxios=usePublicAxios()
+const {user}=useAuth()
 const {id}=useParams()
-const[details,setDetails]=useState([])
-    useEffect(()=>{
- 
- 
-        openAxios.get('/userpost')
-        .then(res=>{
-           
-           setDetails(res.data)
-        })
+
+ const { register, handleSubmit,reset} = useForm()
     
-    
-    
-    },[openAxios])
+
+const{data:details=[]}=useQuery({
+    queryKey:['details-post'],
+  
+    queryFn:async()=>{
+           const res=await openAxios.get('/userpost')
+             
+           return res.data
+          
+    }
+})
+
+
+
+
+
 
 
 const findsameId=details.find(deta=>deta._id===id)
 console.log(findsameId)
 
 // const{name,tags,description,image,title,date}=findsameId
+
+
+//   VOTE COUNTS
+const upVoteHandler=(findsameId)=>{
+
+const voteupInfo={upVote:findsameId.upVote}
+
+openAxios.patch(`/userpost/upvote/${findsameId?._id}`,voteupInfo)
+.then(res=>{
+    console.log('upvote', res.data)
+    if(res.data.modifiedCount>0){
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "upVote Given",
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+
+
+
+
+    }
+
+})
+
+};
+
+
+const downVoteHandler=(findsameId)=>{
+
+    const voteDownInfo={downVote:findsameId.downVote}
+
+openAxios.patch(`/userpost/downvote/${findsameId?._id}`,voteDownInfo)
+.then(res=>{
+    console.log('downVote',res.data)
+    if(res.data.modifiedCount>0){
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "downVote Given",
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+
+
+
+
+    }
+})
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+const onSubmit=async(data)=>{
+ const comment=data.comment
+ const cTitle=data.title
+ console.log(comment)
+ const commentInfo={
+    email:user?.email,
+    comment,cTitle
+ }
+
+
+const resC=await openAxios.post('/comment',commentInfo)
+console.log(resC.data)
+reset()
+ if(resC.data.insertedId){
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your Comment Added",
+        showConfirmButton: false,
+        timer: 1500
+      })
+ }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
 
 
 
@@ -49,18 +197,74 @@ console.log(findsameId)
               
                   <p>{findsameId?. description} <span className="text-lg text-blue-600 border-b-2 border-blue-400">{findsameId?.tags}</span> </p>
                    <div className="my-4 flex justify-center items-center border border-b-lime-300">
-                   <p className="btn"><BiUpvote className="text-3xl text-green-600"></BiUpvote></p>
-                   <p className="btn"><BiDownvote className="text-3xl text-red-600"></BiDownvote></p>
-                   <p className="btn"><BiComment className="text-blue-600 text-3xl"></BiComment></p>
+                   <p onClick={()=>upVoteHandler(findsameId)} className="btn"><BiUpvote className="text-3xl text-green-600"></BiUpvote></p>
+                   <p onClick={()=>downVoteHandler(findsameId)} className="btn"><BiDownvote className="text-3xl text-red-600"></BiDownvote></p>
+                      {/* COMMENT WITH MODEL */}
+      
                    </div>
               
               
+                    
               
               
               
-              
-                  <div className="card-actions justify-end">
-                   
+                  <div className="card-actions justify-center">
+                             
+{/* You can open the modal using document.getElementById('ID').showModal() method */}
+<button className="btn" onClick={()=>document.getElementById('my_modal_3').showModal()}><BiComment className="text-blue-600 text-3xl"></BiComment></button>
+<dialog id="my_modal_3" className="modal">
+  <div className="modal-box bg-slate-500">
+    <form method="dialog">
+      {/* if there is a button in form, it will close the modal */}
+      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    
+    <form   onSubmit={handleSubmit(onSubmit)}>
+
+
+
+    <div className="form-control w-full my-6">
+  <label className="label">
+    <span className="label-text">Post Title*</span>
+   
+  </label>
+  <input {...register('title',{required:true})} type="text" defaultValue={findsameId?.title} placeholder=" Post Title" className="input  input-bordered input-primary w-full " />
+  
+</div>
+
+
+
+
+<div className="form-control">
+  <label className="label">
+    <span className="label-text">Your Comment</span>
+   
+  </label>
+  <textarea {...register('comment',{required:true} )} className="textarea textarea-bordered h-24" placeholder="your comment"></textarea>
+  
+  </div>
+
+
+
+
+ <button type="submit" className="btn my-4">Add Comment</button>
+
+
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+  </div>
+</dialog>
+
                   </div>
                 </div>
               </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import usePublicAxios from "../../Hooks/usePublicAxios";
 import UseAxiosSecure from "../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 
 const UserProfile = () => {
@@ -22,7 +23,7 @@ const UserProfile = () => {
 
 const findGoldBadge=goldUser.map(gold=>gold.goldBadge)
 
-console.log(findGoldBadge)
+
 
 
 
@@ -38,15 +39,22 @@ console.log(findGoldBadge)
   const userfind=userEmail.find(userss=>userss.email===user?.email)
  
 
+const {data:mypost=[]}=useQuery({
+ queryKey:['mypost',user?.email],
+ queryFn:async()=>{
+    const res=await openAxios.get(`userpost/${user.email}`)
+    return res.data
+ }
+
+})
 
 
- 
    
  
+ const recentPost = mypost.sort((a, b) => new Date(b.date)- new Date(a.date));
  
- 
-
-
+const myThreePost=recentPost.slice(0,3)
+console.log(myThreePost)
 
     return (
         <div>
@@ -82,9 +90,11 @@ console.log(findGoldBadge)
 
 <div className=" w-[50%] bg-orange-200">
     <div className="card-body">
-<p className="text-center text-xl font-bold border-b-2 border-orange-500">Your Activites</p>
-     <p className="text-center text-red-500 text-xl font-bold"> Total Payments:</p>
-     <p className="text-center text-green-600 text-xl font-bold"> Total Orders:</p>
+<p className="text-center text-xl font-bold border-b-2 border-orange-500">My 3 Recent Posts</p>
+      {
+        myThreePost.map((three,idx)=><li key={idx}>{three.title}</li>)
+      }
+
     </div>
 
 </div>

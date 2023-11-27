@@ -14,7 +14,7 @@ const[tagValues,setTagvalues]=useState('')
 // const[pagePerPost,setPagePerpost]=useState(5)
 // const[currentPage,setCurrentPage]=useState(0)
  const openAxios=usePublicAxios()
-const[popu,setPopu]=useState()
+
  
 
 
@@ -98,7 +98,7 @@ const{data:userposts=[]}=useQuery({
 // //popularity
 
 
-const{data:popularity=[]}=useQuery({
+const{data:popularity=[],refetch}=useQuery({
   queryKey:['popularity'],
 
   queryFn:async()=>{
@@ -138,14 +138,15 @@ console.log(newToOlder)
  
 
   const popularHandler=()=>{
- 
+ console.log('goodss')
     const findIt=popularity.sort((a,b)=>(b.voteDifference)-(a.voteDifference))
+    refetch()
     setFindTags(findIt)
     
     
     }
     
-    console.log(popu)
+  
 
 
 
@@ -212,8 +213,8 @@ console.log(newToOlder)
 
   </div>
 
-  <p className="text-center md:text-end mt-4 font-bold">Sort By<select className="border-2 border-blue-600" name="level"  >
-    <option className="text-white bg-black font-bold"  onClick={popularHandler}   value='popularity'>Popularity</option>
+  <p className="text-center md:text-end mt-4 font-bold"> Sort By<select  onClick={popularHandler}     className="border-2 border-blue-600" name="level"  >
+    <option className="text-white bg-black font-bold hover:bg-black"  value='popularity'>Popularity</option>
  
    </select></p>
 

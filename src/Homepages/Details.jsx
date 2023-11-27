@@ -1,13 +1,13 @@
 
 import usePublicAxios from "../Hooks/usePublicAxios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Hadlines from "../general componets/Hadlines";
 import { BiComment, BiDownvote, BiUpvote } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
-
+import { FaShare } from "react-icons/fa";
 
 const Details = () => {
 const openAxios=usePublicAxios()
@@ -114,7 +114,7 @@ const onSubmit=async(data)=>{
  console.log(comment)
  const commentInfo={
     email:user?.email,
-    comment,cTitle
+    comment,cTitle,commetId:findsameId._id
  }
 
 
@@ -166,17 +166,6 @@ reset()
 
 
 
- 
-
-
-
-
-
-
-
-
-
-
 
 
     return (
@@ -200,7 +189,8 @@ reset()
                    <p onClick={()=>upVoteHandler(findsameId)} className="btn"><BiUpvote className="text-3xl text-green-600"></BiUpvote></p>
                    <p onClick={()=>downVoteHandler(findsameId)} className="btn"><BiDownvote className="text-3xl text-red-600"></BiDownvote></p>
                       {/* COMMENT WITH MODEL */}
-      
+                    <Link className="btn" to={`/share/${findsameId?._id}`}><FaShare className="text-3xl text-blue-600"></FaShare></Link>
+
                    </div>
               
               

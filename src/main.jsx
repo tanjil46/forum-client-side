@@ -27,6 +27,9 @@ import MangeUser from './Dashborad/AdminHome/MangeUser';
 import Announcement from './Dashborad/AdminHome/Announcement';
 
 import Details from './Homepages/Details';
+import SharePost from './Homepages/SharePost';
+import Mypost from './Dashborad/UserHome/Mypost';
+import AllComments from './Dashborad/UserHome/AllComments';
 
 const queryClient = new QueryClient()
 const router=createBrowserRouter([
@@ -62,6 +65,10 @@ const router=createBrowserRouter([
       path:'/detail/:id',
       element:<Details></Details>
  
+    },
+    {
+      path:'/share/:id',
+      element:<SharePost></SharePost>
     }
 
 
@@ -91,6 +98,14 @@ const router=createBrowserRouter([
     {
       path:'userprofile',
       element:<UserProfile></UserProfile>
+    },
+    {
+      path:'mypost',
+      element:<Mypost></Mypost>
+    },
+    {
+path:'comment/:title',
+element:<AllComments></AllComments>
     },
 
 

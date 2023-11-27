@@ -55,7 +55,7 @@ admin?
 <IoIosAdd></IoIosAdd></NavLink>
 
 
- <NavLink to='/dash/review' className='text-white  mx-auto text-5xl'>
+ <NavLink to='/dashboard/mypost' className='text-white  mx-auto text-5xl'>
  <MdLocalPostOffice></MdLocalPostOffice></NavLink>
 
 </li>

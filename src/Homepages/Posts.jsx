@@ -29,7 +29,7 @@ console.log(commentsC)
     return (
         <div>
          <Link to={`/detail/${_id}`}>
-            <div className=" lg:w-[90%] min-h-[400px] w-[full] text-black border border-black my-4">
+            <div className=" lg:w-[90%] min-h-[400px] w-full text-black border border-black my-4 rounded-lg">
                 
   <div className="card-body  ">
     <div className="flex gap-2">

@@ -54,7 +54,7 @@ const GoogleLogin = () => {
             
        <button onClick={googleLogInHanler}>
 
-       <AwesomeButton   className="space-x-3" type="primary">
+       <AwesomeButton     className="space-x-3" type="primary">
 Google
  <FaGoogle></FaGoogle>
 

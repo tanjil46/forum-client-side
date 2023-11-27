@@ -1,65 +1,95 @@
 
-import { useState } from "react";
+
 import useAuth from "../../Hooks/useAuth";
 import usePublicAxios from "../../Hooks/usePublicAxios";
-import UseAxiosSecure from "../../Hooks/useAxiosSecure";
+
 import { useQuery } from "@tanstack/react-query";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 
 
 const UserProfile = () => {
-    const[userEmail,setUserEmail]=useState([])
+   
     const{user}=useAuth()
-   const openAxios=usePublicAxios()
-   const[goldUser,setGoldUser]=useState([])
+   const openAxios=usePublicAxios
+  
     
    const axiosSecure=UseAxiosSecure()
  
-  axiosSecure.get(`/payment/${user?.email}`)
- .then(res=>{
-    console.log(res.data)
-    setGoldUser(res.data)
- })
-
-
-const findGoldBadge=goldUser.map(gold=>gold.goldBadge)
 
 
 
 
 
-
-   openAxios.get('/users',)
-   .then(res=>{
+ const {data:payment=[]}=useQuery({
+    queryKey:['payment',user?.email],
+    queryFn:async()=>{
+       const res=await axiosSecure.get(`/payment/${user?.email}`)
+       return res.data
+    }
    
-    setUserEmail(res.data)
    })
+
+
+
+const findGoldBadge=payment?.map(pay=>pay.goldBadge)
+
+
+
+
+
+
+
+
+const {data:userEmail=[]}=useQuery({
+    queryKey:['useremail',user?.email],
+    queryFn:async()=>{
+       const res=await openAxios.get('/users')
+       return res.data
+    }
+   
+   })
+
+
+
+
+
+
    
    
-   
-  const userfind=userEmail.find(userss=>userss.email===user?.email)
+  const userfind=userEmail?.find(userss=>userss.email===user?.email)
  
 
-const {data:mypost=[]}=useQuery({
- queryKey:['mypost',user?.email],
- queryFn:async()=>{
-    const res=await openAxios.get(`userpost/${user.email}`)
-    return res.data
- }
 
-})
 
+
+
+    const {data:mypost=[]}=useQuery({
+        queryKey:['mypost',user?.email],
+        queryFn:async()=>{
+           const res=await openAxios.get(`userpost/${user?.email}`)
+           return res.data
+        }
+       
+       })
+
+
+console.log(mypost)
+
+
+
+ 
 
    
  
  const recentPost = mypost.sort((a, b) => new Date(b.date)- new Date(a.date));
- 
-const myThreePost=recentPost.slice(0,3)
+
+const myThreePost=recentPost?.slice(0,3)
 console.log(myThreePost)
 
     return (
         <div>
             <p className="text-3xl">
-                <span>Hi,Welcome </span> {user?.displayName?user.displayName:'Back'}
+                <span className="">Hi,Welcome </span> {user?.displayName?user.displayName:'Back'}
                 
             </p>
             <div className="w-full flex my-6 ">
@@ -92,7 +122,8 @@ console.log(myThreePost)
     <div className="card-body">
 <p className="text-center text-xl font-bold border-b-2 border-orange-500">My 3 Recent Posts</p>
       {
-        myThreePost.map((three,idx)=><li key={idx}>{three.title}</li>)
+       
+        myThreePost?.map((three,idx)=><li key={idx}>{three.title}</li>)
       }
 
     </div>

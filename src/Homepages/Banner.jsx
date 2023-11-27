@@ -4,7 +4,7 @@ import usePublicAxios from "../Hooks/usePublicAxios";
 
 import Posts from "./Posts";
 import { useQuery } from "@tanstack/react-query";
-
+import backImage from '../img/pngtree222230524.jpg'
 
 
 const Banner = () => {
@@ -98,7 +98,7 @@ const{data:userposts=[]}=useQuery({
 // //popularity
 
 
-const{data:popularity=[],refetch}=useQuery({
+const{data:popularity=[]}=useQuery({
   queryKey:['popularity'],
 
   queryFn:async()=>{
@@ -138,9 +138,9 @@ console.log(newToOlder)
  
 
   const popularHandler=()=>{
- console.log('goodss')
+
     const findIt=popularity.sort((a,b)=>(b.voteDifference)-(a.voteDifference))
-    refetch()
+   
     setFindTags(findIt)
     
     
@@ -183,7 +183,15 @@ console.log(newToOlder)
  
 
 
-
+  const backGroundImage={
+    backgroundImage:`url(${backImage})`,
+   
+  
+  
+  
+  
+   }
+  
 
 
 
@@ -193,17 +201,17 @@ console.log(newToOlder)
 
 
     return (
-        <div className='my-6'>
+        <div className='my-6' >
             <p className='text-center text-3xl font-bold'>Search Your Post</p>
 
-  <div className="my-12">
+  <div className="my-12 w-full  bg-cover h-[460px]   "  style={backGroundImage} >
 
-  <div  className="text-center ">
+  <div  className="text-center p-16" >
    
-  <input onChange={(e)=>setTagvalues(e.target.value)} className="py-2 px-10 outline-none border-b-4  border-red-500" type="text"  placeholder="Your Post" ></input> 
- <button   className="btn btn-error">Search</button>
+  <input onChange={(e)=>setTagvalues(e.target.value)} className="py-2 px-10 w-full outline-none border-b-4  border-red-500" type="text"  placeholder="Your Post" ></input> 
+ <button   className="btn my-3 btn-error">Search</button>
 
- <Tags></Tags>
+ <Tags findTags={findTags}></Tags>
  </div>
 
 
@@ -220,7 +228,7 @@ console.log(newToOlder)
 
         
 
-  <div className="grid grid-cols-1 lg:grid-cols-2 p-10 gap-3 my-4">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-10 gap-3 my-2">
     {
   findTags.map((posts,idx)=><Posts posts={posts} key={idx}></Posts>)
     }

@@ -4,6 +4,9 @@ import Forum from '../img/forum-logojpg.jpg'
 import GoogleLogin from "./GoogleLogin";
 import useAuth from "../Hooks/useAuth";
 import { useForm } from "react-hook-form";
+import { AwesomeButton } from "react-awesome-button";
+import 'react-awesome-button/dist/styles.css';
+import Swal from "sweetalert2";
 const Login = () => {
 
 const location=useLocation()
@@ -20,9 +23,24 @@ const onSubmit=async(data)=>{
      userSingIn(email,password)
      .then((result)=>{
       console.log(result.user)
+      Swal.fire(
+        'sucess',
+        'Succesfully logIn',
+        'success'
+      )
       navigate(location?.state?location.state:'/')
      })
-    .catch(error=>console.log(error.message))
+    .catch(error=>{
+      console.log(error.message)
+      Swal.fire(
+        'error',
+        `${error.message}`,
+        'error'
+      )
+
+    })
+     
+     
     }
     
     
@@ -62,10 +80,10 @@ const onSubmit=async(data)=>{
         
         
          <div className="hero ">
-         <div className="hero-content ">
+         <div className="hero-content  ">
         
         
-         <div className="card flex-shrink-0  w-full lg:w-[500px] h-[600px]  bg-white">
+         <div className="card flex-shrink-0  mx-auto w-full lg:w-[500px] h-[600px]  bg-white">
              <div className="">
          <p className="text-center text-xl font-bold">JOIN US</p>
          </div>
@@ -93,7 +111,12 @@ const onSubmit=async(data)=>{
         </form>
         
         <p className="text-center">Need An Account?</p>
-         <Link className="btn bg-slate-500 text-black " to='/resister'>Sign Up</Link>
+         <Link className=" text-center " to='/resister'> <AwesomeButton     className="" type="secondary">
+Sing Up
+ 
+
+            </AwesomeButton></Link>
+        
 
 
         <div className="space-y-4">

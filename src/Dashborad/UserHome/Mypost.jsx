@@ -97,7 +97,7 @@ refetch()
          {userpost?.title}
         </td>
 
-        <td className="flex justify-center gap-4">
+        <td className="flex items-center justify-center gap-4">
           <p>Upvote:<span className="font-bold text-green-500 text-lg">{userpost.upVote}</span></p>
           <p>DownVote:<span className="font-bold text-red-500 text-lg" >{userpost.downVote}</span></p>
         </td>

@@ -32,6 +32,8 @@ import Mypost from './Dashborad/UserHome/Mypost';
 import AllComments from './Dashborad/UserHome/AllComments';
 import Report from './Dashborad/AdminHome/Report';
 import Adminprofile from './Dashborad/AdminHome/Adminprofile';
+import PrivateRoute from '../PrivateRoute/PrivateRoute';
+import Adminprivate from '../PrivateRoute/Adminprivate';
 
 const queryClient = new QueryClient()
 const router=createBrowserRouter([
@@ -57,7 +59,7 @@ const router=createBrowserRouter([
     },
     {
       path:'/member',
-      element:<Membership></Membership>
+      element:<PrivateRoute><Membership></Membership></PrivateRoute>
     },
     {
       path:'/payment',
@@ -65,7 +67,7 @@ const router=createBrowserRouter([
     },
     {
       path:'/detail/:id',
-      element:<Details></Details>
+      element:<PrivateRoute><Details></Details></PrivateRoute>
  
     },
     {
@@ -87,7 +89,7 @@ const router=createBrowserRouter([
 
 {
   path:'dashboard',
-  element:<Dashboard></Dashboard>,
+  element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
   children:[
 
       //  USER ROUTES
@@ -116,20 +118,20 @@ element:<AllComments></AllComments>
 
     {
     path:'users',
-    element:<MangeUser></MangeUser>
+    element:<Adminprivate><MangeUser></MangeUser></Adminprivate>
 
     },
     {
       path:'ament',
-      element:<Announcement></Announcement>
+      element:<Adminprivate><Announcement></Announcement> </Adminprivate>
     },
     {
       path:'report',
-      element:<Report></Report>
+      element:<Adminprivate><Report></Report></Adminprivate>
     },
     {
       path:'adminhome',
-      element:<Adminprofile></Adminprofile>
+      element:<Adminprivate><Adminprofile></Adminprofile></Adminprivate>
     }
 
 

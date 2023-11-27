@@ -25,12 +25,10 @@ const [feedback,setFeedBack]=useState('')
 
 
 
-//  const commentLength=comments.map(leng=>leng.comment)
-
-  
-
-
-// // const word=commentLength.split()
+// const commentLength=comments.map(leng=>leng.comment)
+// const textSplit=commentLength.split(' ')
+// console.log(textSplit)
+// // // // const word=commentLength.split()
 
 // console.log(commentLength)
 
@@ -114,7 +112,7 @@ console.log(feedback)
         </td>
 
         <td className="text-center">
-           {comment?.comment}
+           {comment.comment}
          
         </td>
         

@@ -88,7 +88,15 @@ const onSubmit=async(data)=>{
 naviagte('/')
     })
     
-    .catch(error=>console.log(error.message))
+    .catch(error=>{
+        Swal.fire(
+            'error',
+            `${error.message}`,
+            'error'
+          )
+          console.log(error.message)
+
+    })
     
     
     
@@ -203,7 +211,7 @@ naviagte('/')
 </form>
 <div className="flex ">
     <p className='text-sm'>Already Resisterd! Please Login</p>
-    <Link className='' to='/login'>
+    <Link className='btn' to='/login'>
 
         <AwesomeButton type="secondary">Login Now</AwesomeButton>
     </Link>

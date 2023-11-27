@@ -55,7 +55,7 @@ const axiosSecure=UseAxiosSecure()
        {report.postOwner}
         </td>
 
-        <td className=" ">
+        <td className="font-bold text-red-400 ">
          {report.feedback}
 
         </td>

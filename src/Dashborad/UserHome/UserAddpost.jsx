@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import Hadlines from "../../general componets/Hadlines";
 import usePublicAxios from "../../Hooks/usePublicAxios";
 import Swal from "sweetalert2";
@@ -16,18 +16,32 @@ const UserAddpost = () => {
     const { register, handleSubmit,reset} = useForm()
 const openAxios=usePublicAxios()
 const{user}=useAuth()
-const [totalPost,setTotalPost]=useState(0)
+
 const [becomeMember,setBecomeMember]=useState(false)
 const axiosSecure=UseAxiosSecure()
-const[sameUser,setsameUser]=useState([])
 
 
-openAxios.get(`/post-count/${user?.email}`)
-.then(res=>{
-  console.log(res.data)
-  setTotalPost(res?.data?.toTalPost)
-})
+
+
+
+
+const {data:totalPost}=useQuery({
+  queryKey:['mypost',user?.email],
+  queryFn:async()=>{
+     const res=await openAxios.get(`/post-count/${user?.email}`)
+     return res.data?.toTalPost
+  }
+ 
+ })
+ 
+
 console.log(totalPost)
+
+
+
+
+
+
 // const {refetch,data:toTalPost}=useQuery({
 //   queryKey:['totalpost',user.email],
 //   queryFn:async()=>{
@@ -39,31 +53,46 @@ console.log(totalPost)
 // })
 // console.log('payment')
 
-useEffect(()=>{
+// useEffect(()=>{
 
 
-  axiosSecure.get(`/payment/${user?.email}`)
- .then(res=>{
-    console.log(res.data)
-   setsameUser(res.data)
+//   axiosSecure.get(`/payment/${user?.email}`)
+//  .then(res=>{
+//     console.log(res.data)
+//    setsameUser(res.data)
+//  })
+
+//  },[axiosSecure,(user?.email)])
+
+
+
+
+ const {data:payment=[],refetch}=useQuery({
+  queryKey:['payment',user?.email],
+  queryFn:async()=>{
+     const res=await axiosSecure.get(`/payment/${user?.email}`)
+     return res.data
+  }
+  
+ 
  })
 
- },[axiosSecure,(user?.email)])
 
-const findUser=sameUser.map(same=>same.email)
+
+const findUser=payment?.map(pay=>pay.email)
 const matchUser= user?.email==findUser
 console.log(findUser,matchUser)
 
   
 useEffect(()=>{
-if(totalPost==5 ){
- return setBecomeMember(false)
-}if(matchUser==true){
- return setBecomeMember(true)
+if(totalPost<=5){
+ setBecomeMember(false)
+
+}else if(matchUser){
+  setBecomeMember(false)
 }else{
-   setBecomeMember(false)
+  setBecomeMember(true)
 }
- 
  
 
     
@@ -247,7 +276,7 @@ console.log(newTag)
   <option value="travel">Travel</option>
   <option value="works">Works</option>
   {
-    newTag.map((tagN,idx)=><option key={idx} value={tagN.tags}>{tagN.tags}</option> )
+    newTag?.map((tagN,idx)=><option key={idx} value={tagN.tags}>{tagN.tags}</option> )
   }
 </select> 
   

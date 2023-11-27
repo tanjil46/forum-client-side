@@ -30,6 +30,8 @@ import Details from './Homepages/Details';
 import SharePost from './Homepages/SharePost';
 import Mypost from './Dashborad/UserHome/Mypost';
 import AllComments from './Dashborad/UserHome/AllComments';
+import Report from './Dashborad/AdminHome/Report';
+import Adminprofile from './Dashborad/AdminHome/Adminprofile';
 
 const queryClient = new QueryClient()
 const router=createBrowserRouter([
@@ -120,6 +122,14 @@ element:<AllComments></AllComments>
     {
       path:'ament',
       element:<Announcement></Announcement>
+    },
+    {
+      path:'report',
+      element:<Report></Report>
+    },
+    {
+      path:'adminhome',
+      element:<Adminprofile></Adminprofile>
     }
 
 

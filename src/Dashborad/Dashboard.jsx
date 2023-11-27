@@ -33,7 +33,7 @@ admin?
  <FaUsers></FaUsers>
 </NavLink>
 
-<NavLink to='/dashboard/manage' className='text-white  mx-auto text-5xl'>
+<NavLink to='/dashboard/report' className='text-white  mx-auto text-5xl'>
 <MdReport></MdReport>
  </NavLink>
 

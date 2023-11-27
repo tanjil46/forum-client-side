@@ -5,7 +5,9 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { Link } from "react-router-dom";
-import UseAxiosSecure from "../../Hooks/useAxiosSecure";
+
+import { useQuery } from "@tanstack/react-query";
+import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 
 
 const bbImage_hosting_key='26084db1c96279fe50abffb136cb0e8e';
@@ -129,6 +131,18 @@ if(postRes.data.insertedId){
  }
 
 
+ const {data:newTag}=useQuery({
+  queryKey:['result'],
+  queryFn:async()=>{
+     const res=await openAxios.get('/addtag')
+     return res.data
+  }
+ 
+ })
+
+
+console.log(newTag)
+
 
     return (
       
@@ -232,6 +246,9 @@ if(postRes.data.insertedId){
   <option value="health">Health</option>
   <option value="travel">Travel</option>
   <option value="works">Works</option>
+  {
+    newTag.map((tagN,idx)=><option key={idx} value={tagN.tags}>{tagN.tags}</option> )
+  }
 </select> 
   
 </div>

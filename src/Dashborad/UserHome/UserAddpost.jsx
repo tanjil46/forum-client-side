@@ -25,11 +25,11 @@ const axiosSecure=UseAxiosSecure()
 
 
 
-const {data:totalPost}=useQuery({
-  queryKey:['mypost',user?.email],
+const {data:totalPost,refetch}=useQuery({
+  queryKey:['totalpost',user?.email],
   queryFn:async()=>{
      const res=await openAxios.get(`/post-count/${user?.email}`)
-     return res.data?.toTalPost
+     return res?.data?.toTalPost
   }
  
  })
@@ -67,7 +67,7 @@ console.log(totalPost)
 
 
 
- const {data:payment=[],refetch}=useQuery({
+ const {data:payment=[]}=useQuery({
   queryKey:['payment',user?.email],
   queryFn:async()=>{
      const res=await axiosSecure.get(`/payment/${user?.email}`)
@@ -85,14 +85,13 @@ console.log(findUser,matchUser)
 
   
 useEffect(()=>{
-if(totalPost<=5){
- setBecomeMember(false)
 
-}else if(matchUser){
-  setBecomeMember(false)
-}else{
+ if(totalPost==5 && !matchUser ){
   setBecomeMember(true)
-}
+ }else{
+  setBecomeMember(false)
+ }
+
  
 
     
@@ -142,9 +141,10 @@ const userPost={image,name,title,tags,date,email,description,upVote:0,downVote:0
 
 const postRes=await openAxios.post('/userpost',userPost)
   console.log(postRes.data)
-
+  
 if(postRes.data.insertedId){
   reset()
+  refetch()
   Swal.fire({
     position: "top-end",
     icon: "success",

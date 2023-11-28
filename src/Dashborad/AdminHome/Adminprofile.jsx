@@ -80,33 +80,33 @@ axiosSecure.post('/addtag',tagInfo)
 
 
 
-                <div className="stats shadow flex my-5 text-center justify-center">
+                <div className="stats w-full shadow flex my-5 text-center justify-center">
   
   <div className="stat bg-cyan-400">
     <div className="stat-figure text-primary ">
-     <FaUsers className="text-2xl"></FaUsers>
+     <FaUsers className="md:text-2xl text-lg"></FaUsers>
     </div>
-    <div className="stat-title">Totat Users</div>
-    <div className="stat-value text-primary">{result?.totalusers}</div>
+    <div className="md:stat-title  text-xs md:text-lg">Total Users</div>
+    <div className="md:stat-value text-lg font-bold text-primary">{result?.totalusers}</div>
    
   </div>
   
   <div className="stat bg-cyan-400">
     <div className="stat-figure text-secondary">
-     <MdMail className="text-2xl"></MdMail>
+     <MdMail className="md:text-2xl text-lg"></MdMail>
     </div>
-    <div className="stat-title">Total Posts</div>
-    <div className="stat-value text-secondary">{result?.totalpost}</div>
+    <div className="md:stat-title text-xs md:text-lg">Total Posts</div>
+    <div className="md:stat-value font-bold text-lg text-secondary">{result?.totalpost}</div>
     
   </div>
   
 
   <div className="stat bg-cyan-400">
     <div className="stat-figure text-secondary">
-     <FaComment className="text-2xl"></FaComment>
+     <FaComment className="md:text-2xl text-lg"></FaComment>
     </div>
-    <div className="stat-title">Total Comments</div>
-    <div className="stat-value text-secondary">{result?.totalcomment}</div>
+    <div className="md:stat-title text-xs md:text-l">Total Comments</div>
+    <div className="md:stat-value font-bold text-lg text-secondary">{result?.totalcomment}</div>
     
   </div>
 
@@ -130,10 +130,10 @@ axiosSecure.post('/addtag',tagInfo)
      
 
 
-<img className="w-[180px] rounded-full mx-auto border-orange-600 border-2" src={user?.photoURL}></img>
+<img className="md:w-[180px] w-[100px] rounded-full mx-auto border-orange-600 border-2" src={user?.photoURL}></img>
 
      <p className="text-center text-xl font-bold">{user?.displayName}</p>
-     <p className="text-center text-red-500 text-xl font-bold">{user?.email}</p>
+     <p className="text-center text-red-500 md:text-xl text-lg font-bold">{user?.email}</p>
     </div>
 
 </div>

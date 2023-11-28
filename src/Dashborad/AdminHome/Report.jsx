@@ -1,13 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import Hadlines from "../../general componets/Hadlines";
+import { MdReport } from "react-icons/md";
+import usePublicAxios from "../../Hooks/usePublicAxios";
+import Swal from "sweetalert2";
 
 
 const Report = () => {
 
 const axiosSecure=UseAxiosSecure()
-
-    const {data:reports=[]}=useQuery({
+const openAxios=usePublicAxios()
+    const {data:reports=[],refetch}=useQuery({
         queryKey:['reports'],
         queryFn:async()=>{
            const res=await axiosSecure.get('/report')
@@ -17,6 +20,68 @@ const axiosSecure=UseAxiosSecure()
        })
 
    console.log(reports)
+
+
+
+  const reportHandler=(report)=>{
+
+
+
+
+ Swal.fire({
+  title: "Are you sure?",
+  text: "You want to Ban User For doing Comment!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, Ban It!"
+}).then((result) => {
+  if (result.isConfirmed){
+
+   openAxios.delete(`/report/${report._id}`)
+   .then(res=>console.log(res.data))
+   refetch()
+    const banInfo={banEmail:report?.commentorEmail}
+
+    openAxios.post('/banuser',{banInfo})
+    .then(res=>{
+      console.log(res.data)
+      if(res.data.insertedId){
+    
+        Swal.fire(
+          'success',
+          'User Ban For Comment Succesfully',
+          'success'
+        )
+      }
+    })
+
+  }
+
+
+  })
+
+
+
+
+
+
+
+
+
+  
+
+  }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -33,9 +98,7 @@ const axiosSecure=UseAxiosSecure()
     {/* head */}
     <thead>
       <tr>
-        <th>
-        #
-        </th>
+      
         <th className="text-black font-bold">Post Owner</th>
         <th className="text-black font-bold" >FeedBack</th>
         <th className="text-black font-bold">Commentor</th>
@@ -48,21 +111,18 @@ const axiosSecure=UseAxiosSecure()
 
 {
     reports.map((report,index)=> <tr key={index}>
-        <th>
-          {index+1}
-        </th>
-        <td>
-       {report.postOwner}
+       
+        <td className="md:text-base text-xs"> {report?.postOwner}
         </td>
 
-        <td className="font-bold text-red-400 ">
-         {report.feedback}
+        <td className="font-bold md:text-base text-xs text-red-400 ">
+         {report?.feedback}
 
         </td>
         
         <td  className="p-3">
            
-         {report.commentorEmail}
+         {report?.commentorEmail}
 
             </td>
 
@@ -74,7 +134,7 @@ const axiosSecure=UseAxiosSecure()
 
 
         <th>
-        <button  className="btn bg-red-400">Report commentetor</button>
+        <button onClick={(()=>reportHandler(report ))}  className="btn md:btn-lg btn-xs bg-red-400"><MdReport></MdReport></button>
 
 
 

@@ -3,6 +3,8 @@ import UseAxiosSecure from "../../Hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import usePublicAxios from "../../Hooks/usePublicAxios";
 
 
 
@@ -12,10 +14,11 @@ const elements=useElements()
 const[secretOfClient,setSecretOfClient]=useState('')
 const[transitionId,setTransationId]=useState('')
 const axiosSecure=UseAxiosSecure()
+const openAxios=usePublicAxios()
 const[Errors,setError]=useState('')
 const price=80;
 const{user}=useAuth()
-
+const navigate=useNavigate()
 useEffect(()=>{
    
     axiosSecure.post('/create-payment-intent',{price})
@@ -65,7 +68,7 @@ const formHandler=async(event)=>{
             billing_details:{
              email:user.email,
              name:user.displayName,
-            goldBadge:'https://i.ibb.co/qJJz3pG/images11.jpg'
+            
             }
         }
      })
@@ -85,24 +88,19 @@ const formHandler=async(event)=>{
             price,
             transitionId:paymentIntent.id,
             date:new Date(),
-          
+            goldBadge:'https://i.ibb.co/qJJz3pG/images11.jpg'
+           
     }
 
  const res=await axiosSecure.post('/payment',paymentInfo)
            console.log('paymet upload',res.data)
 
-         
+         const badgeInfo={
+            badge:'https://i.ibb.co/qJJz3pG/images11.jpg'
+         }
 
-
-
-
-
-
-
-
-
-
-
+   const badgeRes=await openAxios.patch(`/users/${user?.email}`,badgeInfo)
+   console.log(badgeRes.data)
 
            if(res.data.insertedId){
             Swal.fire(
@@ -110,6 +108,7 @@ const formHandler=async(event)=>{
               'You are Member Now',
               'success'
             )
+            navigate('/')
           }
 
 

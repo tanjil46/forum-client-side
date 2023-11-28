@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../Hooks/useAxiosSecure";
 import Hadlines from "../../general componets/Hadlines";
-import { useEffect, useState } from "react";
+
 import Swal from "sweetalert2";
 import {  FaUsers } from "react-icons/fa";
 
 import userAdmin from '../../img/useradmin.jpg'
 const MangeUser = () => {
 const axiosSecure=UseAxiosSecure()
-const[memeberShip,setmemBership]=useState([])
 
 
 const {data:users=[],refetch}=useQuery({
@@ -22,22 +21,26 @@ const {data:users=[],refetch}=useQuery({
    
 })
 
-useEffect(()=>{
- axiosSecure.get('/payment')
- .then(res=>{
-    console.log(res.data)
-    setmemBership(res.data)
- })
-
-},[axiosSecure])
-const userEmail=users.map(userEmail=>userEmail.email)
-
-const matchUserbadge=memeberShip.filter(ship=>ship.email===userEmail)
 
 
-//  const findGoldMember=memeberShip.map(ship=>ship.goldBadge)
 
-console.log(matchUserbadge,userEmail)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -81,7 +84,7 @@ const hadlerAdmin=(user)=>{
     return (
         <div>
             <Hadlines title={'Manage Users'}></Hadlines>
-            <p>length:{users?.length}</p>
+          
 
             <div className="overflow-x-auto ">
   <table className="table w-full bg-orange-300 min-h-screen">
@@ -106,18 +109,18 @@ const hadlerAdmin=(user)=>{
         <th>
           {index+1}
         </th>
-        <td>
+        <td className="">
          {user?.name}
         </td>
 
-        <td>
-          <p>{user?.email}</p>
+        <td className="">
+          <p className='w-[130px] md:text-lg text-xs'>{user?.email}</p>
         </td>
         
         <td  className="p-3">
             {
-                user.role==='admin'?<img className="w-[40px] bg-orange-300 rounded-full" src={userAdmin}></img>:
-            <p className="btn"><FaUsers onClick={()=>hadlerAdmin(user)} className=" text--black text-2xl text-center   "></FaUsers></p>
+                user.role==='admin'?<img className="md:w-[40px] w-[30px] bg-orange-300 rounded-full" src={userAdmin}></img>:
+            <p className="btn"><FaUsers onClick={()=>hadlerAdmin(user)} className=" text--black text-lg md:text-2xl text-center   "></FaUsers></p>
 }
             </td>
 
@@ -130,9 +133,9 @@ const hadlerAdmin=(user)=>{
 
         <th>
         
-        {/* findGoldMember>0? <img className="w-[100px] rounded-full" src={findGoldMember}></img>: */}
-        <img className="w-[90px] rounded-full" src={user?.badge}></img>
-       
+        
+      <img className="md:w-[90px] w-[30px] rounded-full" src={user?.badge }></img>
+
 
 
 

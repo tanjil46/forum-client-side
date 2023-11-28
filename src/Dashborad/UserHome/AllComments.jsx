@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 const AllComments = () => {
 const{title}=useParams()
 const openAxios=usePublicAxios()
+
 const {user}=useAuth()
 const[disabled,setDisabled]=useState(true)
 const [feedback,setFeedBack]=useState('')
@@ -25,18 +26,7 @@ const [feedback,setFeedBack]=useState('')
 
 
 
-// const commentLength=comments.map(leng=>leng.comment)
-// const textSplit=commentLength.split(' ')
-// console.log(textSplit)
-// // // // const word=commentLength.split()
 
-// console.log(commentLength)
-
-
-
-// const maxlength=commentLength.length=20
-// const maxLength2=commentLength.slice(0,maxlength)
-// console.log('commelength',maxlength,word)
 
 const reportHandler=(comment)=>{
 
@@ -81,14 +71,16 @@ console.log(feedback)
 
     return (
         <div>
-            <Hadlines title={'See All Your Comments'}></Hadlines>
+            <Hadlines title={'See All Comments'}></Hadlines>
 
            
             <div className="overflow-x-auto ">
-  <table className="table w-full bg-orange-300 min-h-screen">
+  <table className="table w-full  bg-orange-300 min-h-screen">
     {/* head */}
     <thead>
-      <tr>
+      <tr className=""> 
+      
+      
         <th>
         #
         </th>
@@ -107,28 +99,44 @@ console.log(feedback)
         <th>
           {index+1}
         </th>
-        <td>
+        <td className="text-xs md:text-base">
          {comment?.email}
         </td>
 
-        <td className="text-center">
-           {comment.comment}
-         
+        <td className=" text-justify  h-[120px] md:h-[200px]">
+           {comment?.comment.split(' ').slice(0, 20).join(' ')}
+           <p>{/* The button to open modal */}
+<label htmlFor="my_modal_6" className=""><a className="link link-primary">See More</a> </label>
+
+{/* Put this part before </body> tag */}
+<input type="checkbox" id="my_modal_6" className="modal-toggle" />
+<div className="modal" role="dialog">
+  <div className="modal-box ">
+   
+    <p>{comment?.comment}</p>
+    
+    <div className="modal-action">
+      <label htmlFor="my_modal_6" className="btn">Close!</label>
+    </div>
+  </div>
+</div></p>
         </td>
         
-        <td  className="p-3">
+        <td  className="p-4">
            
        
   
-  <select onChange={feedbackHandler} value={feedback} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box  space-y-4">
-     <option className="" value={'Inappropriate Content'}>Inappropriate Content </option>
-        <option value={'Unwanted Promotion'}>Unwanted Promotion</option>
-        <option value={'Harassment or Threats'}>Harassment or Threats</option>
+  <select onChange={feedbackHandler} value={feedback} className="dropdown-content z-[1] w-[80px] md:w-[180px]  md:p-2  bg-base-100 rounded-box  space-y-4">
+     <option className="text-xs md:text-base" value={'Inappropriate Content'}>Inappropriate Content </option>
+        <option className="text-xs md:text-base"  value={'Unwanted Promotion'}>Unwanted Promotion</option>
+        <option className="text-xs md:text-base" value={'Harassment or Threats'}>Harassment or Threats</option>
    
   feed</select>
-
+ 
+           
 
             </td>
+             
 
 
 
@@ -136,9 +144,8 @@ console.log(feedback)
 
 
 
-
-        <th>
-        <button onClick={()=>reportHandler(comment)} disabled={disabled} className="btn bg-red-400"><MdReport></MdReport></button>
+        <th className="mr-6 ">
+        <button onClick={()=>reportHandler(comment)} disabled={disabled} className="btn  btn-xs md:btn-lg bg-red-400"><MdReport></MdReport></button>
 
 
 

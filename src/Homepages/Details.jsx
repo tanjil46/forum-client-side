@@ -8,12 +8,13 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { FaShare } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const Details = () => {
 const openAxios=usePublicAxios()
 const {user}=useAuth()
 const {id}=useParams()
-
+const[disabled,setDisabled]=useState(false)
  const { register, handleSubmit,reset} = useForm()
     
 
@@ -133,30 +134,35 @@ reset()
 
     
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
 
 
+const{data:banUsers=[]}=useQuery({
+  queryKey:['banUsers'],
+
+  queryFn:async()=>{
+         const res=await openAxios.get('/banuser')
+           
+         return res.data
+        
+  }
+})
+ 
+useEffect(()=>{
 
 
 
+  const banTheUser=banUsers.map(ban=>ban.banEmail==user?.email)
+  setDisabled(banTheUser[0])
+ 
+  
 
+
+
+},[banUsers,user?.email])
+console.log(disabled)
 
 
 
@@ -235,9 +241,12 @@ reset()
   </div>
 
 
+{
+  disabled?<button disabled type="submit" className="btn my-4">Add Comment</button>:
+<button  type="submit" className="btn my-4">Add Comment</button>
+}
 
-
- <button type="submit" className="btn my-4">Add Comment</button>
+ 
 
 
 

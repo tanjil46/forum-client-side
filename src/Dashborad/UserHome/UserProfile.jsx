@@ -4,34 +4,21 @@ import useAuth from "../../Hooks/useAuth";
 import usePublicAxios from "../../Hooks/usePublicAxios";
 
 import { useQuery } from "@tanstack/react-query";
-import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
+
+import { useEffect, useState } from "react";
 
 
 const UserProfile = () => {
    
     const{user}=useAuth()
-   const openAxios=usePublicAxios
-  
+   const openAxios=usePublicAxios()
+   const[mypost,setMypost]=useState([])
     
-   const axiosSecure=UseAxiosSecure()
+ 
  
 
 
 
-
-
- const {data:payment=[]}=useQuery({
-    queryKey:['payment',user?.email],
-    queryFn:async()=>{
-       const res=await axiosSecure.get(`/payment/${user?.email}`)
-       return res.data
-    }
-   
-   })
-
-
-
-const findGoldBadge=payment?.map(pay=>pay.goldBadge)
 
 
 
@@ -41,7 +28,7 @@ const findGoldBadge=payment?.map(pay=>pay.goldBadge)
 
 
 const {data:userEmail=[]}=useQuery({
-    queryKey:['useremail',user?.email],
+    queryKey:['useremail'],
     queryFn:async()=>{
        const res=await openAxios.get('/users')
        return res.data
@@ -50,27 +37,28 @@ const {data:userEmail=[]}=useQuery({
    })
 
 
+console.log(userEmail)
 
 
-
-
+const findSameUser=userEmail.find(userE=>userE.email==user?.email)
    
-   
-  const userfind=userEmail?.find(userss=>userss.email===user?.email)
+   console.log(findSameUser)
  
 
 
 
+ useEffect(()=>{
+
+ openAxios.get(`/userpost/${user.email}`)
+.then(res=>{
+    setMypost(res.data)
+})
 
 
-    const {data:mypost=[]}=useQuery({
-        queryKey:['mypost',user?.email],
-        queryFn:async()=>{
-           const res=await openAxios.get(`userpost/${user?.email}`)
-           return res.data
-        }
-       
-       })
+ },[openAxios,user?.email])
+
+
+
 
 
 console.log(mypost)
@@ -101,10 +89,10 @@ console.log(myThreePost)
 
             <div className=" w-[50%] bg-orange-200">
     <div className="card-body">
-       {
-        findGoldBadge.length>0? <img className="w-[100px] rounded-full" src={findGoldBadge[0]}></img>:
-        <img className="w-[90px] rounded-full" src={userfind?.badge}></img>
-       }
+       
+        
+        <img className="w-[90px] rounded-full" src={findSameUser?.badge}></img>
+       
 
 
 <img className="w-[180px] rounded-full mx-auto border-orange-600 border-2" src={user?.photoURL}></img>

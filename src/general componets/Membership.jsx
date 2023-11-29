@@ -10,25 +10,28 @@ const Membership = () => {
             <div className="p-20 gap-0 ">
 
 
-<div className="card card-side mx-auto bg-base-100 shadow-xl">
+<div className="card md:flex md:flex-row md:items-center bg-base-100 shadow-xl">
   
-<div className="hidden lg:block">
-    <img className="w-[500px] h-[600px]" src={meMber}></img>
+<div className="hidden  lg:block">
+    <img className="w-[500px] h-[600px] " src={meMber}></img>
  </div>
 
 
-  <div className="card-body ">
+  <div className="">
    
-  <div className="card w-96 bg-base-100 shadow-xl">
-  <figure><img src={badgeGolds} alt="Shoes" /></figure>
-  <div className="card-body">
-    <h2 className="card-title">
+  <div className="md:w-96 w-full py-5 bg-slate-400 shadow-xl">
+  <figure><img src={badgeGolds} alt="" /></figure>
+  <div className="p-5 w-full">
+    <h2 className="md:card-title flex items-center">
       <FaHandPointRight></FaHandPointRight>Become Member
       <div className="badge badge-secondary">80$</div>
     </h2>
-    <p className='flex items-center text-xl'><FaHandPointRight></FaHandPointRight>You can Do Ulimited Post</p>
-    <p className='flex items-center text-xl'><FaHandPointRight></FaHandPointRight>Get The Gold badge</p>
-    
+    <p className='flex items-center md:text-xl'><FaHandPointRight></FaHandPointRight>You can Do
+    <br></br> Ulimited Post</p>
+    <p className='flex items-center md:text-xl'><FaHandPointRight></FaHandPointRight>Get The Gold badge</p>
+    <div className="text-center my-3">
+    <Link to='/payment' className='btn  bg-green-600'>Buy Now</Link>
+    </div>
   </div>
 </div>
 
@@ -38,7 +41,7 @@ const Membership = () => {
 
 
 
-<Link to='/payment' className='btn bg-green-600'>Pay Now</Link>
+
 
 
 </div>

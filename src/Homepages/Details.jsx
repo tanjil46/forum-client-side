@@ -16,7 +16,7 @@ const {user}=useAuth()
 const {id}=useParams()
 const[disabled,setDisabled]=useState(false)
  const { register, handleSubmit,reset} = useForm()
-    
+
 
 const{data:details=[]}=useQuery({
     queryKey:['details-post'],
@@ -38,7 +38,7 @@ const{data:details=[]}=useQuery({
 const findsameId=details.find(deta=>deta._id===id)
 console.log(findsameId)
 
-// const{name,tags,description,image,title,date}=findsameId
+
 
 
 //   VOTE COUNTS
@@ -149,19 +149,35 @@ const{data:banUsers=[]}=useQuery({
         
   }
 })
- 
+
+const theUser=banUsers.map(ban=>ban.banInfo?.banEmail)[0]
+
+
+
+
+ console.log(theUser)
+
+
+
+
+
+
+
+
 useEffect(()=>{
 
 
 
-  const banTheUser=banUsers.map(ban=>ban.banEmail==user?.email)
-  setDisabled(banTheUser[0])
- 
+if(theUser==user?.email){
+  setDisabled(true)
+}
+
+
   
 
 
 
-},[banUsers,user?.email])
+},[theUser,user?.email])
 console.log(disabled)
 
 

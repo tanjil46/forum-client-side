@@ -95,6 +95,7 @@ console.log(feedback)
     <tbody>
 
 {
+  comments.length>0?
     comments.map((comment,index)=> <tr key={index}>
         <th>
           {index+1}
@@ -104,11 +105,12 @@ console.log(feedback)
         </td>
 
         <td className=" text-justify  h-[120px] md:h-[200px]">
+         
            {comment?.comment.split(' ').slice(0, 20).join(' ')}
-           <p>{/* The button to open modal */}
-<label htmlFor="my_modal_6" className=""><a className="link link-primary">See More</a> </label>
+           
+ {comment?.comment.length>=20? <label htmlFor="my_modal_6" className=""><a className="link link-primary">See More</a> </label> : ''    }
 
-{/* Put this part before </body> tag */}
+
 <input type="checkbox" id="my_modal_6" className="modal-toggle" />
 <div className="modal" role="dialog">
   <div className="modal-box ">
@@ -119,7 +121,8 @@ console.log(feedback)
       <label htmlFor="my_modal_6" className="btn">Close!</label>
     </div>
   </div>
-</div></p>
+</div>
+         
         </td>
         
         <td  className="p-4">
@@ -151,7 +154,7 @@ console.log(feedback)
 
 
         </th>
-     </tr>)
+     </tr>):<p className="mx-auto text-red-500 text-xl my-6">No One Comments in this Post </p>
 }
 
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const openAxios=axios.create({
-    baseURL:'http://localhost:5000'
+    baseURL:'https://forum-server-eight.vercel.app'
 })
 const usePublicAxios = () => {
     return openAxios

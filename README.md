@@ -1,8 +1,5 @@
-# React + Vite
+## Project Feature
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Forum is an online communication website where people can share their stories on different ways.A user can comment can give like or dislike even if they want they can share  with others User will have his dashboard where he can post,update even he/she can see her/his post can report comment if anyone do any Inappropriate comments he/she can delete post.User can Take membership by payment and after payment they can do as much post they want.Admin has dashboard also from where he/she can give admin role to user,update announcement delete user etc.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Live Link](https://forum-online-6d608.web.app/)
